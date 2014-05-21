@@ -1,4 +1,4 @@
-Vaadin Blueimp Image Gallery
+Vaadin Masonry Image Cards
 =======================
 
 A [Vaadin 7][1] component for displaying Image Cards in a Masonry Layout.
