@@ -1,0 +1,143 @@
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/imagesloaded.pkgd.min.js"></script>
+<style>
+body {
+    background: #d5d5d5;
+}
+
+.grid li {
+    display: block;
+    max-width: 150px;
+    max-height: 150px;
+    border: solid 2px #eee;
+    padding: 10px;
+    margin: 0 0 10px 10px;
+    background: white;
+}
+
+/**** Transitions ****/
+
+.masonry,
+.masonry li { /* apply before masonry add class */
+    position: absolute; /* important to add it before enter animation start */
+    
+    -webkit-transition-duration: .7s;
+    transition-duration: .7s;
+    
+    -webkit-transition-property: all;
+    transition-property: all;
+}
+
+.masonry .masonry-enter { /* limit animated properties for entering elements */
+    -webkit-transition-property: -webkit-transform, opacity;
+    transition-property: transform, opacity;
+}
+
+.masonry-enter,
+.masonry-leave.masonry-leave-active {
+    opacity: 0;
+    -webkit-transform: scale(0.1);
+    transform: scale(0.1);
+}
+
+.masonry-leave,
+.masonry-enter.masonry-enter-active {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+</style>
+<script>
+$(document).ready(function() { 
+    $('.grid').masonry({
+        columnWidth: 200
+    });
+    
+    var msnry = $('.grid').data('masonry') 
+});
+</script>
+<body>
+    <ul class="grid" masonry="true">
+        <li>
+            <img src="img/test.jpg" width="100%">
+            <br>
+            <span>Summary</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>
+        <li>
+            <span>item.name</span>
+            <br /> <span>Age: item.age</span>
+            <br /> <span>Company: item.company</span>
+        </li>        
+    </ul>
+</body>

@@ -1,0 +1,7 @@
+language: java
+script: mvn clean deploy -DskipTests=true --settings etc/settings.xml
+script: "[ ${TRAVIS_PULL_REQUEST} = 'false' ] && mvn clean deploy -DskipTests=true --settings etc/settings.xml || mvn clean verify -DskipTests=true --settings etc/settings.xml"
+env:
+  global:
+  - secure: KksW1poACWekL4kpygLu2e1A/x+kshC2G8eFeVyCQ1dUWBR0FqTGPLEHppW+DgHyLk4RlPtoudiEQnOu/KLJ9yxEI0cDj9N3wXp853JnK+MHyy5kdtEErURjEsldDdAjgLk8BUzsC6vpceY9G3USBOmR8RfBRjoLt0WngrAP018=
+  - secure: f6rYXf0CZDEnNMbyrYNa5CeHAosK7AdeoaujSIBg6hCK9Wm3sHe/eOI7aT5fayvAdVC3ds9NyMTdAAtBfp2wNC1m2pc8Q/6OfplLCyn8chCJ7ZiBJ1ospJDW7LRxaiQlqrJ69CU29M5Bb2CPHc3WDSvU02T2YxAvbU6KK6bnPsY=

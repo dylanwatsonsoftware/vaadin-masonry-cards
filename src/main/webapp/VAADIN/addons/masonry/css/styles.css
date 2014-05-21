@@ -1,0 +1,96 @@
+/* Extra styles here */
+.content {
+    /*position:fixed;*/
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    /*overflow:scroll;*/
+    -webkit-overflow-scrolling:touch;
+    background:#E0E0E0;
+}
+
+.card {
+    float: center;
+    background:#FFF;
+    border:1px solid #AAA;
+    border-bottom:3px solid #BBB;
+    padding:0px;
+    margin:15px;
+    overflow:hidden;
+    width: 89%;
+}
+
+/* enough width for 2 columns */
+@media screen and ( min-width: 500px ) {
+  .card {
+    width: 42.9%;
+  }
+}
+
+/* enough width for 3 columns */
+@media screen and ( min-width: 720px ) {
+  .card {
+    width: 28.5%;
+  }
+}
+
+/* ---- desktop ---- */
+@media screen and ( min-width: 1200px ) {
+  .card {
+    /* enough width for 4 columns */
+    width: 22.3%;
+  }
+}
+
+/* ---- desktop ---- */
+@media screen and ( min-width: 1500px ) {
+  .card {
+    /* enough width for 4 columns */
+    width: 22.3%;
+  }
+}
+
+.card h1 {
+    margin:0px;
+    padding:10px;
+    padding-bottom:0px;
+}
+
+.card p {
+    margin:0px;
+    padding:10px;
+}
+
+.card-image {
+    width:100%;
+    height:250px;
+    padding:0px;
+    margin:0px;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+    overflow:hidden;
+}
+
+.card-image-portrait {
+    width:100%;
+    height:400px;
+    padding:0px;
+    margin:0px;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+    overflow:hidden;
+}
+
+.card-image h1, .card-image h2, .card-image h3, .card-image h4, .card-image h5, .card-image h6, .card-image-portrait h2 {
+    position:absolute;
+    bottom:0px;
+    width:100%;
+    color:white;
+    background:rgba(0, 0, 0, 0.65);
+    margin:0px;
+    padding:6px;
+    border:none;
+}
