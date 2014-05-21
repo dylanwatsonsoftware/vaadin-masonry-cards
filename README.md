@@ -41,7 +41,7 @@ VerticalLayout layout = new VerticalLayout();
 Masonry masonry = new Masonry();
 layout.addComponent(masonry);
 ```
-Then, just create the images and show the gallery!
+Then, just create the images and add them to your masonry wall!
 ```java
 masonry.addCard("Title", "Description", "image.jpg", "white", new MasonryClickListener() {
   @Override
@@ -51,7 +51,7 @@ masonry.addCard("Title", "Description", "image.jpg", "white", new MasonryClickLi
 });
 ```
 
-For maximum effect try using it in conjunction with the [Vaadin Blueimp Gallery][3]!
+For maximum effect, try using it in conjunction with the [Vaadin Blueimp Gallery][3]!
 ```java
 Masonry masonry = new Masonry();
 Gallery gallery = new Gallery();
