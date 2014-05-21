@@ -7,6 +7,8 @@ Thanks to Andrew Trice's [Cards UI][2] for the initial inspiration!
 
 [![Build Status](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards.svg?branch=master)](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards)
 
+![Masonry Cards Example Image][4]
+
 Download
 --------
 
@@ -94,3 +96,4 @@ License
  [1]: https://vaadin.com/home
  [2]: https://github.com/triceam/cards-ui
  [3]: https://github.com/lotsabackscatter/vaadin-blueimp-gallery
+ [4]: https://raw.githubusercontent.com/lotsabackscatter/vaadin-masonry-cards/master/etc/example.png "Masonry Cards Example"
