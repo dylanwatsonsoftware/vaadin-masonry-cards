@@ -29,7 +29,7 @@ Download the latest JAR or grab via the Sonatype Maven Repository:
 
 <dependency>
   <groupId>com.github.lotsabackscatter</groupId>
-  <artifactId>vaadin-blueimp-gallery</artifactId>
+  <artifactId>vaadin-masonry-cards</artifactId>
   <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
