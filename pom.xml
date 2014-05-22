@@ -16,7 +16,7 @@
 
     <name>Vaadin Masonry Cards</name>
     <description>A Vaadin 7 component for displaying Image Cards in a Masonry Layout</description>
-    <url>https://github.com/lotsabackscatter/vaadin-masonry</url>
+    <url>https://github.com/lotsabackscatter/vaadin-masonry-cards</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,8 +41,8 @@
 
     <scm>
         <connection>scm:git:git://github.com/lotsabackscatter/vaadin-masonry-cards.git</connection>
-        <developerConnection>scm:git:git@github.com:lotsabackscatter/vaadin-masonry-cards.git</developerConnection>
-        <url>https://github.com/lotsabackscatter/vaadin-masonry</url>
+        <developerConnection>scm:git:git@github.com/lotsabackscatter/vaadin-masonry-cards.git</developerConnection>
+        <url>https://github.com/lotsabackscatter/vaadin-masonry-cards</url>
       <tag>HEAD</tag>
   </scm>
 
