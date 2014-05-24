@@ -1,5 +1,5 @@
 language: java
-script: '[ ${TRAVIS_PULL_REQUEST} = ''false'' ] && mvn clean deploy -DskipTests=true
+script: '[ ${TRAVIS_PULL_REQUEST} = ''false'' ] && mvn clean deploy -DperformRelease=true -DskipTests=true
   --settings etc/settings.xml || mvn clean verify -DskipTests=true --settings etc/settings.xml'
 env:
   global:
