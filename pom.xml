@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -21,6 +22,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>7.1.15</vaadin.version>
+        <SONATYPE_PASSWORD></SONATYPE_PASSWORD>
         <gpg.passphrase>${SONATYPE_PASSWORD}</gpg.passphrase>
     </properties>
 
@@ -43,8 +45,8 @@
         <connection>scm:git:git://github.com/lotsabackscatter/vaadin-masonry-cards.git</connection>
         <developerConnection>scm:git:git@github.com/lotsabackscatter/vaadin-masonry-cards.git</developerConnection>
         <url>https://github.com/lotsabackscatter/vaadin-masonry-cards</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -107,9 +109,9 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
-	                <mavenExecutorId>forked-path</mavenExecutorId>
-	                <useReleaseProfile>false</useReleaseProfile>
-	                <arguments>-Dgpg.passphrase=${SONATYPE_PASSWORD} -Psonatype-oss-release</arguments>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <arguments>-Dgpg.passphrase=${SONATYPE_PASSWORD} -Psonatype-oss-release</arguments>
                 </configuration>
             </plugin>
             <plugin>
