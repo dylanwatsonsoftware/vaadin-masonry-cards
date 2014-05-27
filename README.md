@@ -12,7 +12,16 @@ Thanks to Andrew Trice's [Cards UI][2] for the initial inspiration!
 Download
 --------
 
-Download the latest JAR or grab via the Sonatype Maven Repository:
+Download the latest release via Maven Central:
+```xml
+<dependency>
+    <groupId>com.github.lotsabackscatter</groupId>
+    <artifactId>vaadin-masonry-cards</artifactId>
+    <version>1.1</version>
+</dependency>
+```
+
+Or Download the latest SNAPSHOT via the Sonatype Maven Repository:
 ```xml
 <repositories>
     <repository>
@@ -30,7 +39,7 @@ Download the latest JAR or grab via the Sonatype Maven Repository:
 <dependency>
   <groupId>com.github.lotsabackscatter</groupId>
   <artifactId>vaadin-masonry-cards</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
 </dependency>
 ```
 
