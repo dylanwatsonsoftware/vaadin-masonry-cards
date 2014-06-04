@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Vaadin Masonry Image Cards by lotsabackscatter</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Vaadin Masonry Image Cards</h1>
+          <h2>A Vaadin 7 component for displaying Image Cards in a Masonry Layout</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/lotsabackscatter/vaadin-masonry-cards/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/lotsabackscatter/vaadin-masonry-cards/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/lotsabackscatter/vaadin-masonry-cards" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p><a href="https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards"><img src="https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards.svg?branch=master" alt="Build Status"></a></p>
+
+<p>A <a href="https://vaadin.com/home">Vaadin 7</a> component for displaying Image Cards in a Masonry Layout.</p>
+
+<p>Thanks to Andrew Trice's <a href="https://github.com/triceam/cards-ui">Cards UI</a> for the initial inspiration!</p>
+
+<p><img src="https://raw.githubusercontent.com/lotsabackscatter/vaadin-masonry-cards/master/etc/example.png" alt="Masonry Cards Example Image" title="Masonry Cards Example"></p>
+
+<h2>
+<a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Download the latest release via Maven Central:</p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.github.lotsabackscatter&lt;/groupId&gt;
+    &lt;artifactId&gt;vaadin-masonry-cards&lt;/artifactId&gt;
+    &lt;version&gt;1.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>Or Download the latest SNAPSHOT via the Sonatype Maven Repository:</p>
+
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;oss-sonatype&lt;/id&gt;
+        &lt;name&gt;oss-sonatype&lt;/name&gt;
+        &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt;
+        &lt;snapshots&gt;
+            &lt;enabled&gt;true&lt;/enabled&gt;
+        &lt;/snapshots&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+...
+
+&lt;dependency&gt;
+  &lt;groupId&gt;com.github.lotsabackscatter&lt;/groupId&gt;
+  &lt;artifactId&gt;vaadin-masonry-cards&lt;/artifactId&gt;
+  &lt;version&gt;1.2-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Simply create a layout and add the Masonry component to it!</p>
+
+<div class="highlight highlight-java"><pre><span class="n">VerticalLayout</span> <span class="n">layout</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VerticalLayout</span><span class="o">();</span>
+<span class="n">Masonry</span> <span class="n">masonry</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Masonry</span><span class="o">();</span>
+<span class="n">layout</span><span class="o">.</span><span class="na">addComponent</span><span class="o">(</span><span class="n">masonry</span><span class="o">);</span>
+</pre></div>
+
+<p>Then, just create the images and add them to your masonry wall!</p>
+
+<div class="highlight highlight-java"><pre><span class="n">masonry</span><span class="o">.</span><span class="na">addCard</span><span class="o">(</span><span class="s">"Title"</span><span class="o">,</span> <span class="s">"Description"</span><span class="o">,</span> <span class="s">"image.jpg"</span><span class="o">,</span> <span class="s">"white"</span><span class="o">,</span> <span class="k">new</span> <span class="n">MasonryClickListener</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">Notification</span><span class="o">.</span><span class="na">show</span><span class="o">(</span><span class="s">"Clicked!"</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+<p>For maximum effect, try using it in conjunction with the <a href="https://github.com/lotsabackscatter/vaadin-blueimp-gallery">Vaadin Blueimp Gallery</a>!</p>
+
+<div class="highlight highlight-java"><pre><span class="n">Masonry</span> <span class="n">masonry</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Masonry</span><span class="o">();</span>
+<span class="n">Gallery</span> <span class="n">gallery</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gallery</span><span class="o">();</span>
+
+<span class="n">layout</span><span class="o">.</span><span class="na">addComponent</span><span class="o">(</span><span class="n">gallery</span><span class="o">);</span>
+<span class="n">layout</span><span class="o">.</span><span class="na">addComponent</span><span class="o">(</span><span class="n">masonry</span><span class="o">);</span>
+
+<span class="n">masonry</span><span class="o">.</span><span class="na">addCard</span><span class="o">(</span><span class="n">image</span><span class="o">.</span><span class="na">title</span><span class="o">,</span> <span class="s">"Description"</span><span class="o">,</span> <span class="n">image</span><span class="o">.</span><span class="na">href</span><span class="o">,</span> <span class="s">"#FCC800"</span><span class="o">,</span> <span class="k">new</span> <span class="n">MasonryClickListener</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">gallery</span><span class="o">.</span><span class="na">showGallery</span><span class="o">(</span><span class="n">image</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+<h2>
+<a name="developed-by" class="anchor" href="#developed-by"><span class="octicon octicon-link"></span></a>Developed By</h2>
+
+<ul>
+<li>Dylan Watson - <a href="mailto:lotsabackscatter@gmail.com">lotsabackscatter@gmail.com</a>
+</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>Copyright 2014 Dylan Watson.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+        </section>
+
+        <footer>
+          Vaadin Masonry Image Cards is maintained by <a href="https://github.com/lotsabackscatter">lotsabackscatter</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
