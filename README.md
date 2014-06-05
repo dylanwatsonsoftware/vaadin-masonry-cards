@@ -1,11 +1,10 @@
-Vaadin Masonry Image Cards
+Vaadin Masonry Image Cards [![Build Status](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards.svg?branch=master)](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards)
 =======================
 
 A [Vaadin 7][1] component for displaying Image Cards in a Masonry Layout.
 
 Thanks to Andrew Trice's [Cards UI][2] for the initial inspiration!
 
-[![Build Status](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards.svg?branch=master)](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards)
 
 ![Masonry Cards Example Image][4]
 
