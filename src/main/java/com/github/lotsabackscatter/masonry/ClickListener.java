@@ -5,7 +5,7 @@ package com.github.lotsabackscatter.masonry;
  *
  * @author watsond
  */
-public interface MasonryClickListener {
+public interface ClickListener {
 
     /**
      * Fired whenever a masonry element is clicked.
