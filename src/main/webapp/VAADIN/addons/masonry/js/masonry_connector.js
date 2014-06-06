@@ -7,7 +7,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
     this.addCard = function(id, title, description, href, colour) {
         if(!colour) colour = '#FFF';
-        var card = $('<div class="card" style="background-color: ' + colour + '"></div>');
+        var card = $('<div class="card glow" style="background-color: ' + colour + '"></div>');
 
         var cardimage = $('<div class="card-image" style="cursor: pointer;"></div>');
         card.click(function() {
