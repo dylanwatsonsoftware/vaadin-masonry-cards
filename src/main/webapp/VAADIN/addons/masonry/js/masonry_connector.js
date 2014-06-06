@@ -36,16 +36,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
     var msnry = null;
     this.layMeOut = function() {
-        if(msnry) {
-            try {
-                msnry.destroy();
-            } catch(e) {}
-        }
-
         msnry = new Masonry('.content');
-//        $('.content').masonry({
-//          isResizable: false
-//        });
     };
 
     function deferMasonry() {
@@ -115,7 +106,6 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
     var lastScrollTop = 0;
     var handleScrollEvents = function(event){
-        console.log('scrolling');
         var st = $(this).scrollTop();
         if (st > lastScrollTop){
             // downscroll code
@@ -178,7 +168,6 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
                     //$('.card-image img.not-loaded').trigger('scroll');
                 }
             });
-            //that.layMeOut();
             deferMasonry();
             //$('.card-image img.not-loaded').trigger('scroll');
 //        });
