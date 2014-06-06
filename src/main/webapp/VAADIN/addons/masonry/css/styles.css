@@ -45,10 +45,18 @@
 }
 
 /* ---- desktop ---- */
-@media screen and ( min-width: 1500px ) {
+@media screen and ( min-width: 1400px ) {
   .card {
     /* enough width for 4 columns */
     width: 22.3%;
+  }
+}
+
+/* ---- widescreen ---- */
+@media screen and ( min-width: 1600px ) {
+  .card {
+    /* enough width for 5 columns */
+    width: 17.3%;
   }
 }
 
