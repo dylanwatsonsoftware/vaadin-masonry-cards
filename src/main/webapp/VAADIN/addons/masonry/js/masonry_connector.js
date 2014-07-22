@@ -1,16 +1,44 @@
 window.com_github_lotsabackscatter_masonry_Masonry = function() {
+    
+    /***** Vaadin Added functions *****/
+
+    this.getElement = this.getElement || function () { return $('body'); }; // Added by Vaadin
+    this.onClick = this.onClick || function (id) {}; // Added by Vaadin
+    this.loadMore = this.loadMore || function () {}; // Added by Vaadin (onLoadComplete is called after this)
+    
+    /***** Globaly Masonry Variables *****/
+    
+    var that = this;
+    var thisElement = $(this.getElement());
+    var animated = [];
+    var inited = false;    
 
     /***** Java callable functions *****/
-
-    // this.onClick = function () {}; // Added by Vaadin
-    // this.loadMore = function () {}; // Added by Vaadin (onLoadComplete is called after this)
-
+    
+	this.log = this.log || function (msg) {};
+	
+    this.preloadBackgroundImage = function(clazz) {
+        var img = $('<img />');
+        img.toggleClass(clazz);
+        var backgroundImage = img.css("background-image");
+        if (backgroundImage != 'none') {
+          img.src = backgroundImage;
+        }
+    };
+    
+    this.hasOverflow = function(element) {
+    	return element.offsetHeight < element.scrollHeight ||
+    		element.offsetWidth < element.scrollWidth;
+    };
+    
     this.addCard = function(id, title, description, href, colour) {
+        if(!href) return;
         if(!colour) colour = '#FFF';
         var card = $('<div class="card glow" style="background-color: ' + colour + '"></div>');
-
+        card.appendTo('.content');
+        
         var cardimage = $('<div class="card-image" style="cursor: pointer;"></div>');
-        card.click(function() {
+        cardimage.click(function() {
             that.onClick(id);
         });
 
@@ -18,25 +46,46 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
         $('<img class="not-loaded" src="' + href + '" ' + 'data-original="' + href + '" width="100%" />').appendTo(cardimage);
         cardimage.appendTo(card);
 
+        var textDiv = $('<div style="width: 92%; height: 100%;" />');
         if (title) {
             var summary = $('<h3>' + title + '</h3>');
-            summary.appendTo(cardimage);
+            summary.appendTo(textDiv);
         }
 
+        var desc;
         if (description) {
-            var desc = $('<p>' + description + '</p>');
-            desc.appendTo(card);
+            desc = $('<p class="hideOverflow">' + description + '</p>');
+            desc.appendTo(textDiv);
         }
+        
+        textDiv.appendTo(card);
 
-        card.appendTo('.content');
-
+        if(desc && that.hasOverflow(desc[0])) {
+	        var expandButton = $('<div class="expand-icon grow" style="cursor: pointer; position: absolute; bottom: 8px; right: 10px;">');
+	        expandButton.appendTo(card);
+	        
+	        expandButton.click(function() {
+	            expandButton.toggleClass("collapse-icon");
+	            expandButton.toggleClass("expand-icon");
+	            
+	            if(desc) {
+	                desc.toggleClass("hideOverflow");
+	            }
+	            
+	            that.moveToFront(card);
+	        });
+        }
+        
         that.reMasonry();
     };
+    
+    var lastZ = 0;
+    this.moveToFront = function(element) {
+    	element.animate({ 'z-index': ++lastZ }, 0);
+    };
 
-
-    var msnry = null;
     this.layMeOut = function() {
-        msnry = new Masonry('.content');
+        new Masonry('.content');
     };
 
     function deferMasonry() {
@@ -51,25 +100,25 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
             youImagesLoadedYet();
 
             // Handle scroll stuff
-            doScrollAnimation("fadeInUp");
+            //doScrollAnimation(null);
 
             if (!inited) {
                 setupScrolling();
                 inited = true;
                 // Ensure that everything is kept in sync
-                setInterval(that.reMasonry, 5000);
+                setInterval(that.reMasonry, 2000);
             }
 
             failed = 0;
         } catch (e) {
             failed += 1;
-            console.log('Could not find the masonry component. Trying again.');
+            that.log('Could not find the masonry component. Trying again.');
 
             if(failed < 10) {
                 setTimeout(that.reMasonry, 1000);
             } else {
-                console.log('Masonry Cards Failed.');
-                console.log(e.stack);
+                that.log('Masonry Cards Failed.');
+                that.log(e.stack);
             }
         }
     };
@@ -78,7 +127,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
 
     this.onLoadComplete = function () {
-        console.log('onLoadComplete Start')
+        that.log('onLoadComplete Start')
         doScrollAnimation("fadeInUp");
 
         that.layMeOut();
@@ -86,7 +135,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
         youImagesLoadedYet();
         setupScrolling();
 
-        console.log('onLoadComplete Complete')
+        that.log('onLoadComplete Complete')
     };
 
     /***** Animation Setup *****/
@@ -109,7 +158,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
         var st = $(this).scrollTop();
         if (st > lastScrollTop){
             // downscroll code
-            doScrollAnimation("fadeInUp");
+            doScrollAnimation(null);
         } else {
            // upscroll code
             //doScrollAnimation("fadeInDown");
@@ -140,7 +189,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
                    animated.push(oel);
                    addAnimation(el, animation);
                } else {
-                   animated.removeAll(oel);
+                   //animated.removeAll(oel);
                }
             }
         });
@@ -150,55 +199,11 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
         var $container = $('.content');
         if($container.length == 0) {
             setTimeout(youImagesLoadedYet, 100);
-            console.log('youImagesLoadedYet Not ready');
+            that.log('Waiting for images.');
             return;
         }
-
-//        $container.imagesLoaded(function () {
-
-            $('.card-image img.not-loaded').lazyload({
-                effect: 'fadeIn',
-                threshold: 200,
-                container: $(".content"),
-                failure_limit: 10,
-                load: function () {
-                    // Disable trigger on this image
-                    $(this).removeClass("not-loaded");
-                    deferMasonry();
-                    //$('.card-image img.not-loaded').trigger('scroll');
-                }
-            });
-            deferMasonry();
-            //$('.card-image img.not-loaded').trigger('scroll');
-//        });
-    };
-
-    var createLoadingElement = function () {
-        // create loading element
-        var loadingElement = document.createElement('div');
-        loadingElement.id = 'loading';
-        loadingElement.className = 'loading';
-        loadingElement.innerHTML = 'Loading...';
-
-        // apply styles
-        loadingElement.style.position = 'fixed';
-        loadingElement.style.background = 'yellow';
-        loadingElement.style.width = '130px';
-        loadingElement.style.textAlign = 'center';
-        loadingElement.style.zIndex = '10000';
-        loadingElement.style.padding = '4px';
-        loadingElement.style.border = 'grey solid 1px';
-        loadingElement.style.display = 'none';
-
-        // attach it to DOM
-        $('body').append(loadingElement);
-
-        // position element
-        $("#loading").position({
-            my: "center top",
-            at: "center top",
-            of: window
-        });
+		
+        deferMasonry();
     };
 
     var setupScrolling = function() {
@@ -208,31 +213,31 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
             $('.content').off('scroll');
             $('.content').on('scroll', handleScrollEvents);
         } else {
-            console.log('Could not complete scroll setup. Trying Again.');
+            that.log('Could not complete scroll setup. Trying Again.');
             setTimeout(setupScrolling, 500);
         }
     };
 
     /********** Main Logic ***********/
-    var that = this;
-    var thisElement = $(this.getElement());
-    var animated = [];
-    var inited = false;
 
     var $container = $('<div class="content"></div>');
     $container.appendTo(thisElement);
-    console.log("Content Created.")
+    that.log("Content Created.")
 
     $(document).ready(function () {
-        console.log("Starting Masonry")
+        that.log("Starting Masonry")
         that.layMeOut();
 
         youImagesLoadedYet();
 
-        doScrollAnimation("fadeInUp");
+        doScrollAnimation(null);
 
         setupScrolling();
+        
+        that.preloadBackgroundImage("collapse-icon");
 
-        console.log("Finishing Masonry")
+        that.log("Finishing Masonry")
     });
+    
+    return this;
 };

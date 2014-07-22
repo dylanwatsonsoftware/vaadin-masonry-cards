@@ -1,36 +1,38 @@
 package com.github.lotsabackscatter.masonry;
 
-import com.vaadin.annotations.JavaScript;
-import com.vaadin.annotations.StyleSheet;
-import com.vaadin.ui.AbstractJavaScriptComponent;
-import com.vaadin.ui.JavaScriptFunction;
-import com.vaadin.ui.Notification;
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
+import com.vaadin.ui.AbstractJavaScriptComponent;
+import com.vaadin.ui.JavaScriptFunction;
+
 /**
  * A Vaadin Component representing a Masonry Card Layout.
- *
+ * 
  * @author watsond
  */
-@JavaScript({
-
-        "vaadin://addons/masonry/js/thirdparty/jquery.min.js",
+@JavaScript({ "vaadin://addons/masonry/js/thirdparty/jquery.min.js",
         "vaadin://addons/masonry/js/thirdparty/masonry.pkgd.min.js",
         "vaadin://addons/masonry/js/thirdparty/jquery.visible.js",
         "vaadin://addons/masonry/js/thirdparty/imagesloaded.pkgd.min.js",
         "vaadin://addons/masonry/js/thirdparty/jquery.lazyload.js",
         "vaadin://addons/masonry/js/prototypes.js",
-        "vaadin://addons/masonry/js/masonry_connector.js"})
-@StyleSheet({"vaadin://addons/masonry/css/animate.css", "vaadin://addons/masonry/css/styles.css"})
+        "vaadin://addons/masonry/js/masonry_connector.js" })
+@StyleSheet({ "vaadin://addons/masonry/css/animate.css",
+        "vaadin://addons/masonry/css/hover.css",
+        "vaadin://addons/masonry/css/styles.css" })
 public class Masonry extends AbstractJavaScriptComponent {
 
     private static final long serialVersionUID = 1L;
-    private Map<UUID, ClickListener> listeners = new HashMap<UUID, ClickListener>();
+
+    private final Map<UUID, ClickListener> listeners = new HashMap<UUID, ClickListener>();
+
     private LoadRequester loadMoreListener = null;
 
     public Masonry() {
@@ -61,8 +63,6 @@ public class Masonry extends AbstractJavaScriptComponent {
              */
             @Override
             public void call(JSONArray arguments) throws JSONException {
-                Notification.show("Loading...", Notification.Type.TRAY_NOTIFICATION);
-
                 if (loadMoreListener != null) {
                     loadMoreListener.loadMore();
                 }
@@ -76,14 +76,16 @@ public class Masonry extends AbstractJavaScriptComponent {
         this.loadMoreListener = loadRequester;
     }
 
-    public void addCard(String name, String description, String href, String cssCardColour, ClickListener clickListener) {
+    public void addCard(String name, String description, String href,
+            String cssCardColour, ClickListener clickListener) {
         UUID id = UUID.randomUUID();
 
         if (clickListener != null) {
             listeners.put(id, clickListener);
         }
 
-        callFunction("addCard", id.toString(), name, description, href, cssCardColour);
+        callFunction("addCard", id.toString(), name, description, href,
+                cssCardColour);
     }
 
     public void relayout() {

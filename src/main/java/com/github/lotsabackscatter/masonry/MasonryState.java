@@ -7,4 +7,5 @@ import com.vaadin.shared.ui.JavaScriptComponentState;
  */
 public class MasonryState extends JavaScriptComponentState {
 
+    private static final long serialVersionUID = 1L;
 }

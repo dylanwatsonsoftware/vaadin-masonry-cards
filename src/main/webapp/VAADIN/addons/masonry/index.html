@@ -1,143 +1,72 @@
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.masonry.min.js"></script>
-<script src="js/imagesloaded.pkgd.min.js"></script>
-<style>
-body {
-    background: #d5d5d5;
-}
+<script src="js/thirdparty/jquery.min.js"></script>
+<script src="js/thirdparty/masonry.pkgd.min.js"></script>
+<script src="js/thirdparty/jquery.visible.js"></script>
+<script src="js/thirdparty/imagesloaded.pkgd.min.js"></script>
+<script src="js/thirdparty/jquery.lazyload.js"></script>
+<script src="js/prototypes.js"></script>
+<script src="js/masonry_connector.js"></script>
 
-.grid li {
-    display: block;
-    max-width: 150px;
-    max-height: 150px;
-    border: solid 2px #eee;
-    padding: 10px;
-    margin: 0 0 10px 10px;
-    background: white;
-}
-
-/**** Transitions ****/
-
-.masonry,
-.masonry li { /* apply before masonry add class */
-    position: absolute; /* important to add it before enter animation start */
-    
-    -webkit-transition-duration: .7s;
-    transition-duration: .7s;
-    
-    -webkit-transition-property: all;
-    transition-property: all;
-}
-
-.masonry .masonry-enter { /* limit animated properties for entering elements */
-    -webkit-transition-property: -webkit-transform, opacity;
-    transition-property: transform, opacity;
-}
-
-.masonry-enter,
-.masonry-leave.masonry-leave-active {
-    opacity: 0;
-    -webkit-transform: scale(0.1);
-    transform: scale(0.1);
-}
-
-.masonry-leave,
-.masonry-enter.masonry-enter-active {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-}
-</style>
+<link type="text/css" rel="stylesheet" href="css/hover.css">
+<link type="text/css" rel="stylesheet" href="css/animate.css">
+<link type="text/css" rel="stylesheet" href="css/styles.css">
 <script>
-$(document).ready(function() { 
-    $('.grid').masonry({
-        columnWidth: 200
-    });
+$(document).ready(function() {
+
+    var vaadinMasonry = window.com_github_lotsabackscatter_masonry_Masonry();
     
-    var msnry = $('.grid').data('masonry') 
+    vaadinMasonry.log = function(msg) { console.log(msg); };
+    
+    var page = 1;
+    var perPage = 20;
+    vaadinMasonry.loadMore = function() {
+        console.log("Loading Page " + page);
+        $.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&format=json&jsoncallback=?&api_key=34536c8d197dd74c5cc51db8354b652d&extras=description,url_sq,url_l,geo,tags&per_page=" + perPage + "&page=" + page).success(jsonFlickrApi);
+        page += 1;
+    };
+    
+    var light_color = function () {
+        return Math.random() * 6 < 5 ? 'white' : 'rgb(' + (Math.floor((256 - 229) * Math.random()) + 230) + ',' + (Math.floor((256 - 229) * Math.random()) + 230) + ',' + (Math.floor((256 - 229) * Math.random()) + 230) + ')';
+    };    
+    
+    var jsonFlickrApi = function (data) {
+        var cards = [];
+        $.each(data.photos.photo, function (i, image) {
+            var description;
+            if (image.description._content) {
+                description = image.description._content;
+                if (image.tags) {
+                    description += '<br><b>' + image.tags + '</b>';
+                }
+            } else {
+                if (image.tags) {
+                    description = '<b>' + image.tags + '</b>';
+                }
+            }
+
+            var title;
+            if (description) {
+                title = image.title;
+            } else {
+                description = image.title;
+            }
+
+            cards.push(vaadinMasonry.addCard(title, title, description, image.url_l, light_color()));
+        });
+        
+        vaadinMasonry.onLoadComplete();
+    };
+
+    vaadinMasonry.loadMore();
 });
 </script>
 <body>
-    <ul class="grid" masonry="true">
-        <li>
-            <img src="img/test.jpg" width="100%">
-            <br>
-            <span>Summary</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>
-        <li>
-            <span>item.name</span>
-            <br /> <span>Age: item.age</span>
-            <br /> <span>Company: item.company</span>
-        </li>        
-    </ul>
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
 </body>

@@ -1,16 +1,22 @@
-/* Add glow animation */
-.glow {
-  display: inline-block;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-property: box-shadow;
-  transition-property: box-shadow;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+/* Expand/Collapse Icons */
+.expand-icon {
+	/* Icon from http://icons8.com/ */
+    background-image: url('../img/expand.png');
+    height: 16px;
+    width: 16px;
 }
-.glow:hover, .glow:focus, .glow:active {
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+
+.collapse-icon {
+	/* Icon from http://icons8.com/ */
+    background-image: url('../img/collapse.png');
+    height: 16px;
+    width: 16px;
+}
+
+.hideOverflow {
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* Card CSS */
@@ -31,23 +37,24 @@
     background:#FFF;
     border:1px solid #AAA;
     border-bottom:3px solid #BBB;
-    padding:0px;
+    padding:5px;
     margin:15px;
     overflow:hidden;
     width: 89%;
+    max-width: 380px;
 }
 
 /* enough width for 2 columns */
-@media screen and ( min-width: 500px ) {
+@media screen and ( min-width: 520px ) {
   .card {
-    width: 42.9%;
+    width: 40.9%;
   }
 }
 
 /* enough width for 3 columns */
-@media screen and ( min-width: 720px ) {
+@media screen and ( min-width: 780px ) {
   .card {
-    width: 28.5%;
+    width: 27.5%;
   }
 }
 
@@ -55,20 +62,12 @@
 @media screen and ( min-width: 1200px ) {
   .card {
     /* enough width for 4 columns */
-    width: 22.3%;
-  }
-}
-
-/* ---- desktop ---- */
-@media screen and ( min-width: 1400px ) {
-  .card {
-    /* enough width for 4 columns */
-    width: 22.3%;
+    width: 21.3%;
   }
 }
 
 /* ---- widescreen ---- */
-@media screen and ( min-width: 1600px ) {
+@media screen and ( min-width: 1900px ) {
   .card {
     /* enough width for 5 columns */
     width: 17.3%;
@@ -82,8 +81,13 @@
 }
 
 .card p {
-    margin:0px;
+    margin:-2px;
     padding:10px;
+    color: #666;
+}
+
+.card h3 {
+    margin:7px 0 2px 7px;
 }
 
 .card-image {
@@ -101,7 +105,7 @@
     width:100%;
     color:white;
     background:rgba(0, 0, 0, 0.65);
-    margin:0px;
+    margin:7px 0 2px 7px;
     padding:6px;
     border:none;
 }
