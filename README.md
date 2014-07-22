@@ -1,5 +1,8 @@
-Vaadin Masonry Image Cards [![Build Status](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards.svg?branch=master)](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards)
+Vaadin Masonry Image Cards
 =======================
+
+[![Build Status](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards.svg?branch=master)](https://travis-ci.org/lotsabackscatter/vaadin-masonry-cards)
+[![Stories in Ready](https://badge.waffle.io/lotsabackscatter/vaadin-masonry-cards.png)](http://waffle.io/lotsabackscatter/vaadin-masonry-cards)
 
 A [Vaadin 7][1] component for displaying Image Cards in a Masonry Layout.
 
