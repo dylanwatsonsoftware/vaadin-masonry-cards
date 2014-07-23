@@ -19,7 +19,7 @@ Download the latest release via Maven Central:
 <dependency>
     <groupId>com.github.lotsabackscatter</groupId>
     <artifactId>vaadin-masonry-cards</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 
@@ -41,7 +41,7 @@ Or Download the latest SNAPSHOT via the Sonatype Maven Repository:
 <dependency>
   <groupId>com.github.lotsabackscatter</groupId>
   <artifactId>vaadin-masonry-cards</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
 </dependency>
 ```
 
