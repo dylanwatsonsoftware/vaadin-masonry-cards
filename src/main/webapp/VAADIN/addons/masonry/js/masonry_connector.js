@@ -1,4 +1,4 @@
-window.com_github_lotsabackscatter_masonry_Masonry = function() {
+window.com_github_lotsabackscatter_masonry_MasonryCards = function() {
     
     /***** Vaadin Added functions *****/
 

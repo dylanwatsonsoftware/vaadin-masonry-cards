@@ -13,7 +13,7 @@
 <link type="text/css" rel="stylesheet" href="css/styles.css">
 <script>
 $(document).ready(function() {
-    var vaadinMasonry = window.com_github_lotsabackscatter_masonry_Masonry();
+    var vaadinMasonry = window.com_github_lotsabackscatter_masonry_MasonryCards();
     
     vaadinMasonry.log = function(msg) { console.log(msg); };
     vaadinMasonry.onClick = function(id) { alert('Clicked "' + id + '"'); };
@@ -80,10 +80,6 @@ $(document).ready(function() {
         return rand(titles) + ' ' + rand(names, 1) + ' ' + rand(names, 2);
     };
 
-
-
-    var randomChoose
-
     var rand = function(strings, numOfElems, separator){
         numOfElems = numOfElems || 1;
         separator = separator || '';
@@ -106,7 +102,7 @@ $(document).ready(function() {
     var capitalise = function(string){
         string = string.toLowerCase();
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    };
     
     var jsonFlickrApi = function (data) {
         var cards = [];
