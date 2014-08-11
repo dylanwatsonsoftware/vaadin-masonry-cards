@@ -51,12 +51,12 @@ Usage
 Simply create a layout and add the Masonry component to it!
 ```java
 VerticalLayout layout = new VerticalLayout();
-Masonry masonry = new Masonry();
+MasonryCards masonry = new MasonryCards();
 layout.addComponent(masonry);
 ```
 Then, just create the images and add them to your masonry wall!
 ```java
-masonry.addCard("Title", "Description", "image.jpg", "white", new MasonryClickListener() {
+masonry.addCard(id, "Title", "Description", "image.jpg", "white", new ClickListener() {
   @Override
   public void onClick() {
       Notification.show("Clicked!");
@@ -66,13 +66,13 @@ masonry.addCard("Title", "Description", "image.jpg", "white", new MasonryClickLi
 
 For maximum effect, try using it in conjunction with the [Vaadin Blueimp Gallery][3]!
 ```java
-Masonry masonry = new Masonry();
+MasonryCards masonry = new MasonryCards();
 Gallery gallery = new Gallery();
 
 layout.addComponent(gallery);
 layout.addComponent(masonry);
 
-masonry.addCard(image.title, "Description", image.href, "#FCC800", new MasonryClickListener() {
+masonry.addCard(id, image.title, "Description", image.href, "#FCC800", new ClickListener() {
     @Override
     public void onClick() {
         gallery.showGallery(image);
