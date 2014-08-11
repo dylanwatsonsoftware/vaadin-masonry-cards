@@ -1,22 +1,89 @@
+/* Use Google Image proxy for resize
+ * https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url={url}&container=focus&resize_w=14&refresh=31536000
+ */
+
 /* Expand/Collapse Icons */
 .expand-icon {
-	/* Icon from http://icons8.com/ */
+	/* http://cdn.icons8.com/storage/windows8/PNG/256/Editing/expand-256.png */
     background-image: url('../img/expand.png');
-    height: 16px;
-    width: 16px;
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    cursor: pointer;   
 }
 
 .collapse-icon {
-	/* Icon from http://icons8.com/ */
+	/* http://cdn.icons8.com/storage/windows8/PNG/256/Editing/collapse-256.png */
     background-image: url('../img/collapse.png');
-    height: 16px;
-    width: 16px;
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    cursor: pointer;
+}
+
+.edit-icon {
+	/* http://cdn.icons8.com/storage/windows8/PNG/256/Editing/pencil-256.png */
+    background-image: url('../img/edit.png');
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    margin: 10px;
+    margin-bottom: 1px;
+    cursor: pointer; 
+}
+
+.reply-icon {
+	/* http://cdn.icons8.com/storage/windows8/PNG/256/Messaging/reply-256.png */
+    background-image: url('../img/action.png');
+    background-size: contain;
+    height: 14px;
+    width: 14px;
+    margin: 10px;
+    margin-left: 0px;
+    margin-bottom: 1px;
+    cursor: pointer; 
+}
+
+.icons-expanded {
+    padding-top: 5px;
+    float: right;
+    position: relative;
+    bottom: 6px;
+    right: 10px;
+}
+
+.icons-collapsed {
+    padding-top: 5px;
+    float: right;
+    position: relative;
+    bottom: 6px;
+    right: 10px;
+}
+
+.hide {
+    display: none;
 }
 
 .hideOverflow {
     text-overflow:ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    padding-bottom: 15px  !important;
+}
+
+.showOverflow {
+    word-wrap: break-word;
+    padding-bottom: 15px  !important;
+}
+
+.replySummary {
+    cursor: pointer;
+    width: 100%;
+    color: #666;
+    padding: 6px;
+    font-weight: bold;
+    font-size: 12;
+    position: absolute;
 }
 
 /* Card CSS */
@@ -29,7 +96,7 @@
     height: 100% !important;
     overflow:scroll !important;
     -webkit-overflow-scrolling:touch;
-    background:#E0E0E0;
+    background:#eaeaea;
 }
 
 .card {
@@ -37,11 +104,12 @@
     background:#FFF;
     border:1px solid #AAA;
     border-bottom:3px solid #BBB;
-    padding:5px;
+    padding:0px;
     margin:15px;
     overflow:hidden;
     width: 89%;
     max-width: 380px;
+    font-family: Calluna,Arial,sans-serif;
 }
 
 /* enough width for 2 columns */
@@ -91,10 +159,10 @@
 }
 
 .card-image {
-    width:100%;
+    width: initial;
     min-height:100px;
+    margin:10px;
     padding:0px;
-    margin:0px;
     position:relative;
     overflow:hidden;
 }
@@ -108,4 +176,30 @@
     margin:7px 0 2px 7px;
     padding:6px;
     border:none;
+}
+
+.reply {
+    padding: 10px;
+    padding-bottom: 15px;
+    background:#F3F1F2;
+    width: 100%;
+    font-size: small;
+}
+
+hr {
+    margin: 0px;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    padding: 0;    
+}
+
+.reply div p {
+    color: black;
+    vertical-align: top;
+    padding: 3px;
+    padding-left: 10px;
+    vertical-align: top;
+    word-wrap: break-word;
 }

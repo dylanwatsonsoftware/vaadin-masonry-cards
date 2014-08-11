@@ -1,8 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Masonry Cards Example</title>
 <script src="js/thirdparty/jquery.min.js"></script>
 <script src="js/thirdparty/masonry.pkgd.min.js"></script>
 <script src="js/thirdparty/jquery.visible.js"></script>
-<script src="js/thirdparty/imagesloaded.pkgd.min.js"></script>
-<script src="js/thirdparty/jquery.lazyload.js"></script>
 <script src="js/prototypes.js"></script>
 <script src="js/masonry_connector.js"></script>
 
@@ -11,22 +13,100 @@
 <link type="text/css" rel="stylesheet" href="css/styles.css">
 <script>
 $(document).ready(function() {
-
     var vaadinMasonry = window.com_github_lotsabackscatter_masonry_Masonry();
     
     vaadinMasonry.log = function(msg) { console.log(msg); };
+    vaadinMasonry.onClick = function(id) { alert('Clicked "' + id + '"'); };
+    vaadinMasonry.onEditClick = function(id, comments) {
+        alert('Editing "' + id + '"');
+        comments = comments || [];
+        vaadinMasonry.updateCard(id, 'Entry thats edited', 'Description', null, 'white', comments);
+    };
+    vaadinMasonry.onReplyClick = function(id, comments) {
+        comments = comments || [];
+        comments.push(randomComment());
+        vaadinMasonry.updateCard(id, 'Entry with more replies', 'Description', null, 'white', comments);
+    };
     
-    var page = 1;
-    var perPage = 20;
+    var page = 400;
+    var perPage = 15;
+    var flickrMethod = "flickr.photos.getRecent";
+    //var flickrMethod = "flickr.photos.comments.getRecentForContacts"; //"flickr.photos.recentlyUpdated"; 
     vaadinMasonry.loadMore = function() {
         console.log("Loading Page " + page);
-        $.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&format=json&jsoncallback=?&api_key=34536c8d197dd74c5cc51db8354b652d&extras=description,url_sq,url_l,geo,tags&per_page=" + perPage + "&page=" + page).success(jsonFlickrApi);
-        page += 1;
+        // https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&format=json&jsoncallback=?&api_key=34536c8d197dd74c5cc51db8354b652d&extras=description,url_sq,url_l,geo,tags
+        var request = "https://api.flickr.com/services/rest/?method=" + flickrMethod + "&format=json&jsoncallback=?&api_key=34536c8d197dd74c5cc51db8354b652d&extras=description,url_sq,url_m,geo,tags&per_page=" + perPage + "&page=" + page;
+        console.log(request);
+        $.getJSON(request).success(jsonFlickrApi);
+        page -= 1;
+        
+        vaadinMasonry.onLoadComplete();
     };
+
+    var names = 'bob carrie bryn bert tock zin wub ton ed ley mop sley jeff jed'.split(' ')
+    var titles = '  Lord Lady Count Von Sir Captain Professor Doctor'.split(' ')
+    var quotes = [];
+    var authors = [];
+    quotes[0] = "I have a new philosophy. I'm only going to dread one day at a time.";
+    authors[0] = "Charles Schulz";
+    quotes[1] = "Reality is the leading cause of stress for those in touch with it.";
+    authors[1] = "Jack Wagner";
+    quotes[2] = "Few things are harder to put up with than the annoyance of a good example.";
+    authors[2] = "Mark Twain";
+    quotes[3] = "The pure and simple truth is rarely pure and never simple.";
+    authors[3] = "Oscar Wilde";
+    quotes[4] = "There's no business like show business, but there are several businesses like accounting.";
+    authors[4] = "David Letterman";
+    quotes[5] = "Man invented language to satisfy his deep need to complain.";
+    authors[5] = "Lily Tomlin";
+    
+    var randomQuote = function () {
+        var i = Math.floor(Math.random() * quotes.length);
+        return { html : '<b>' + authors[i] + '</b><br>' + quotes[i], imageUrl: 'http://lorempixel.com/30/30/nature/' + i }
+    };
+
+    var randomComment = function() {
+        var allWords = quotes.join(' ').split(' ');
+        var i = Math.floor(Math.random() * allWords.length);
+        return { html : '<b>' + getRandomName() + '</b><br>' + rand(allWords, 7, ' '), imageUrl: 'http://lorempixel.com/30/30/nature/' + i }
+
+    }
     
     var light_color = function () {
         return Math.random() * 6 < 5 ? 'white' : 'rgb(' + (Math.floor((256 - 229) * Math.random()) + 230) + ',' + (Math.floor((256 - 229) * Math.random()) + 230) + ',' + (Math.floor((256 - 229) * Math.random()) + 230) + ')';
-    };    
+    }; 
+
+    var getRandomName = function() {
+        return rand(titles) + ' ' + rand(names, 1) + ' ' + rand(names, 2);
+    };
+
+
+
+    var randomChoose
+
+    var rand = function(strings, numOfElems, separator){
+        numOfElems = numOfElems || 1;
+        separator = separator || '';
+        string = ''
+        for(var i=0; i < numOfElems; i++){
+            string += randElem(strings);
+            if(i != numOfElems - 1) {
+                string += separator;
+            }
+        }
+
+        return capitalise(string);
+    };
+
+    var randElem = function(strings){
+        var index = Math.floor(Math.random() * strings.length);
+        return strings[index];
+    };
+
+    var capitalise = function(string){
+        string = string.toLowerCase();
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     
     var jsonFlickrApi = function (data) {
         var cards = [];
@@ -49,8 +129,27 @@ $(document).ready(function() {
             } else {
                 description = image.title;
             }
+            
+            var commentCollector = function(data) {
+                var comments = [];
+                if(data.comments.comment){
+                    $.each(data.comments.comment, function (i, comment) {
+                       var html = '<b>' + (comment.realname || comment.authorname) + '</b><br>' + comment._content;
+                       comments.push({ html: html, imageUrl:  'https://flickr.com/buddyicons/' + comment.author + '.jpg' }); 
+                    });
+                }
 
-            cards.push(vaadinMasonry.addCard(title, title, description, image.url_l, light_color()));
+                if(comments == false) {
+                    comments = [randomQuote(), randomComment(), randomQuote()];
+                }
+
+                cards.push(vaadinMasonry.addCard(image.id, title, description, image.url_m, 'white', comments));
+            };
+
+            //var commentsUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&format=json&jsoncallback=?&api_key=34536c8d197dd74c5cc51db8354b652d&photo_id=109722179"
+            var commentsUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&format=json&jsoncallback=?&api_key=34536c8d197dd74c5cc51db8354b652d&photo_id=" + image.id
+            console.log(commentsUrl);
+            $.getJSON(commentsUrl).success(commentCollector);
         });
         
         vaadinMasonry.onLoadComplete();
@@ -59,6 +158,7 @@ $(document).ready(function() {
     vaadinMasonry.loadMore();
 });
 </script>
+</head>
 <body>
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
     <div class="slides"></div>

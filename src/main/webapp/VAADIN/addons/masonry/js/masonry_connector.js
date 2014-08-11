@@ -4,6 +4,8 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
     this.getElement = this.getElement || function () { return $('body'); }; // Added by Vaadin
     this.onClick = this.onClick || function (id) {}; // Added by Vaadin
+    this.onEditClick = this.onEditClick || function (id) {}; // Added by Vaadin
+    this.onReplyClick = this.onReplyClick || function (id) {}; // Added by Vaadin
     this.loadMore = this.loadMore || function () {}; // Added by Vaadin (onLoadComplete is called after this)
     
     /***** Globaly Masonry Variables *****/
@@ -15,8 +17,14 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
     /***** Java callable functions *****/
     
-	this.log = this.log || function (msg) {};
-	
+    this.log = this.log || function (msg) {};
+    
+    this.getId = function (id) {
+    	id = id || '';
+        return id.replace(' ', '');
+    };
+    
+    
     this.preloadBackgroundImage = function(clazz) {
         var img = $('<img />');
         img.toggleClass(clazz);
@@ -27,65 +35,153 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
     };
     
     this.hasOverflow = function(element) {
-    	return element.offsetHeight < element.scrollHeight ||
-    		element.offsetWidth < element.scrollWidth;
+        return element.offsetHeight < element.scrollHeight ||
+            element.offsetWidth < element.scrollWidth;
     };
     
-    this.addCard = function(id, title, description, href, colour) {
-        if(!href) return;
-        if(!colour) colour = '#FFF';
-        var card = $('<div class="card glow" style="background-color: ' + colour + '"></div>');
+    this.updateCard = function(id, title, description, href, colour, comments) {
+    	id = that.getId(id);
+        var oldCard = $('.content #' + id);
+        
+        var newCard = that.createCard(id, colour);
+        oldCard.replaceWith(newCard);
+        
+        that.populateCard(newCard, id, title, description, href, colour, comments, true);
+        
+        that.reMasonry();
+    };
+    
+    this.addCard = function(id, title, description, href, colour, comments, expanded) {
+    	id = that.getId(id);
+        var card = that.createCard(id, colour);
         card.appendTo('.content');
         
-        var cardimage = $('<div class="card-image" style="cursor: pointer;"></div>');
-        cardimage.click(function() {
-            that.onClick(id);
-        });
+        that.populateCard(card, id, title, description, href, colour, comments, false);
+           
+        that.reMasonry();
+    };
+    
+    this.createCard = function(id, colour){
+    	id = that.getId(id);
+        if(!colour) colour = '#FFF';
+        var card = $('<div id="' + id + '" class="card glow" style="background-color: ' + colour + '"></div>');
+        return card;
+    };
+    
+    this.populateCard = function(card, id, title, description, href, colour, comments, expanded) {
+    	id = that.getId(id);
+    	if(href) {
+            var cardimage = $('<div class="card-image" style="cursor: pointer;"></div>');
+            cardimage.click(function() {
+                that.onClick(id);
+            });
 
-        var dummyImage = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
-        $('<img class="not-loaded" src="' + href + '" ' + 'data-original="' + href + '" width="100%" />').appendTo(cardimage);
-        cardimage.appendTo(card);
+            $('<img src="' + href + '" width="100%" />').appendTo(cardimage);
+            cardimage.appendTo(card);
+        }
 
         var textDiv = $('<div style="width: 92%; height: 100%;" />');
         if (title) {
             var summary = $('<h3>' + title + '</h3>');
             summary.appendTo(textDiv);
+            summary.addClass('showOverflow');
         }
 
         var desc;
         if (description) {
-            desc = $('<p class="hideOverflow">' + description + '</p>');
+            desc = $('<p>' + description + '</p>');
+            desc.addClass(expanded ? "showOverflow" : "hideOverflow");
             desc.appendTo(textDiv);
         }
         
         textDiv.appendTo(card);
+        
+        var icons = $('<div></div>');
+        icons.addClass(expanded ? "icons-expanded" : "icons-collapsed");
+        
+        var hasDescriptionOverflow = desc && that.hasOverflow(desc[0]);
+        var hasComments = comments && comments.length != 0;
+        
+        var editButton = $('<div class="edit-icon grow"></div>');
+        editButton.appendTo(icons);
+        editButton.click(function(){
+            that.onEditClick(id, comments);
+        });
+        
+        var replyButton = $('<div class="reply-icon grow"></div>');
+        replyButton.appendTo(icons);
+        replyButton.click(function(){
+            that.onReplyClick(id, comments);
+        });
+        
+        if(hasDescriptionOverflow || hasComments) {
+            var expandButton = $('<div class="grow"></div>');
+            expandButton.appendTo(icons);
+            expandButton.addClass(expanded ? "collapse-icon" : "expand-icon");
+            
+            var commentsSummary = $('<div id="commentsSummary" class="replySummary"></div>');
+            var commentsDiv = $('<div id="comments" style="width: 100%;"></div>');
+            if(expanded) {
+                commentsSummary.addClass('hide');
+            }else {
+                commentsDiv.addClass('hide');
+            }
+            
+            if (hasComments) {
+                commentsSummary.text( comments.length == 1 ? '1 reply' : comments.length + ' replies');
+                commentsSummary.appendTo(card);
+                commentsDiv.appendTo(card);
+                for (i = 0; i < comments.length; i++) {
+                    var comment = comments[i];
+                    var hr = $('<hr />');
+                    hr.appendTo(commentsDiv);
+                    if(i != 0){
+                        hr.css('margin-top: 10px;');
+                    }
+                    var replyDiv = $('<div class="reply"></div>');
+                    replyDiv.appendTo(commentsDiv);
+                    console.log(comment);
+                    $('<div class="thumb" style="float: left; width: 32px; height: 32px; background-image: url(\'' + comment.imageUrl + '\'); background-size: cover;" width="100%"></div>').appendTo(replyDiv);
+                    var pDiv = $('<div style="padding-left: 32px; padding-bottom: 5px; padding-right: 20px;"></div>');
+                     var pEl = $('<p></p>');
+                    pEl.html(comment.html);
+                    pEl.appendTo(pDiv);
+                    pDiv.appendTo(replyDiv);
+                }
+                $('<hr />').appendTo(commentsDiv);
+            }
 
-        if(desc && that.hasOverflow(desc[0])) {
-	        var expandButton = $('<div class="expand-icon grow" style="cursor: pointer; position: absolute; bottom: 8px; right: 10px;">');
-	        expandButton.appendTo(card);
-	        
-	        expandButton.click(function() {
-	            expandButton.toggleClass("collapse-icon");
-	            expandButton.toggleClass("expand-icon");
-	            
-	            if(desc) {
-	                desc.toggleClass("hideOverflow");
-	            }
-	            
-	            that.moveToFront(card);
-	        });
+            var expander = function() {
+                expandButton.toggleClass("collapse-icon");
+                expandButton.toggleClass("expand-icon");
+                icons.toggleClass("icons-expanded");
+                icons.toggleClass("icons-collapsed");
+                
+                if(desc) {
+                    desc.toggleClass("hideOverflow");
+                    desc.toggleClass("showOverflow");
+                }
+                
+                if(comments){
+                    commentsDiv.toggleClass("hide");
+                    commentsSummary.toggleClass("hide");
+                }
+                
+                that.reMasonry();
+            }
+            
+            expandButton.click(expander);
+            commentsSummary.click(expander);
         }
         
-        that.reMasonry();
-    };
-    
-    var lastZ = 0;
-    this.moveToFront = function(element) {
-    	element.animate({ 'z-index': ++lastZ }, 0);
+        icons.appendTo(card);
+        
+        return card;
     };
 
     this.layMeOut = function() {
-        new Masonry('.content');
+        var msnry = new Masonry('.content');
+        //msnry.stamp( '#loadButton' );
     };
 
     function deferMasonry() {
@@ -95,6 +191,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
     var failed = 0;
     this.reMasonry = function () {
         try {
+            console.log('reMasonrying');
             that.layMeOut();
 
             youImagesLoadedYet();
@@ -106,7 +203,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
                 setupScrolling();
                 inited = true;
                 // Ensure that everything is kept in sync
-                setInterval(that.reMasonry, 2000);
+                setInterval(that.reMasonry, 5000);
             }
 
             failed = 0;
@@ -202,7 +299,7 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
             that.log('Waiting for images.');
             return;
         }
-		
+        
         deferMasonry();
     };
 
@@ -222,6 +319,12 @@ window.com_github_lotsabackscatter_masonry_Masonry = function() {
 
     var $container = $('<div class="content"></div>');
     $container.appendTo(thisElement);
+    
+    /*var loadMoreButton = $('<button id="loadButton" style="position: relative; bottom: 0px;">Load More...</button>');
+    loadMoreButton.click(function() {
+        that.loadMore();
+    });
+    loadMoreButton.appendTo($container);*/
     that.log("Content Created.")
 
     $(document).ready(function () {
